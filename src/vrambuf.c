@@ -9,7 +9,6 @@
 SHARED_EXPORT
 void *vrambuf_create(int device, size_t max_size) {
     VramBuffer *buf;
-    max_size = ALIGN_TO_CHUNK_SIZE(max_size);
 
     max_size = CUDA_ALIGN_UP(max_size);
 
