@@ -53,3 +53,17 @@ Remove-Item $rspFile -ErrorAction SilentlyContinue
 if ($exitCode -ne 0) { throw "Build failed (exit code $exitCode)" }
 Remove-Item -Recurse -Force $detoursDir
 Write-Host "Build successful: comfy_aimdo\aimdo_rocm.dll"
+
+# ── Copy amdhip64_7.dll ────────────────────────────────────────────────────────
+if (-not $env:VIRTUAL_ENV) {
+    Write-Warning "VIRTUAL_ENV is not set; skipping amdhip64_7.dll copy."
+} else {
+    $amdhipSrc = "$rocmBase\bin\amdhip64_7.dll"
+    $amdhipDst = "$env:VIRTUAL_ENV\Lib\site-packages\comfy_aimdo\"
+    if (Test-Path $amdhipSrc) {
+        Copy-Item $amdhipSrc -Destination $amdhipDst -Force
+        Write-Host "Copied amdhip64_7.dll to comfy_aimdo\"
+    } else {
+        Write-Warning "amdhip64_7.dll not found at: $amdhipSrc"
+    }
+}
