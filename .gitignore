@@ -8,3 +8,5 @@ build/
 dist/
 *.egg-info/
 .venv/
+.vscode/
+comfy_aimdo/_version.py
